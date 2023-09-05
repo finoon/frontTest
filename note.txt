@@ -1,0 +1,24 @@
+ng g module name --routing
+
+ng g component name --module
+
+npm install @angular/common/http
+
+ng -g component
+
+
+
+
+
+
+
+//en cas d'echec
+
+suppression du dossier node_module
+
+npm cache clean --force
+
+npm install -g npm@latest
+
+npm install @angular/common@latest
+

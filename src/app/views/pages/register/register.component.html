@@ -1,0 +1,133 @@
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form [formGroup]="registrationForm" (ngSubmit)="registerUser(registrationForm.value)">
+
+              <div class="image-container text-center mb-4">
+                <img src="assets/images/dsi.png" alt="Your Image" class="img-fluid" />
+              </div>
+
+              <p class="text-medium-emphasis">Creation de votre compte</p>
+
+              <!-- Username Input Group -->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input [(ngModel)]="user.nom" name="nom" cFormControl placeholder="Nom" required />
+              </c-input-group>
+              
+              <!-- Username Input Group -->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input [(ngModel)]="user.prenom" name="prenom" cFormControl placeholder="Prénom" required />
+              </c-input-group>
+
+              <!-- Email Input Group -->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>@</span>
+                <input [(ngModel)]="user.email" name="email" cFormControl placeholder="Email" required />
+              </c-input-group>
+
+              <!-- Password Input Group -->
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input [(ngModel)]="user.password" name="password" cFormControl placeholder="Mot de passe" type="password" required />
+              </c-input-group>
+              <div *ngIf="registrationForm.get('password')?.hasError('required') && registrationForm.get('password')?.touched" class="text-danger">
+                Mot de passe requis.
+              </div>
+              <div *ngIf="registrationForm.get('password')?.hasError('passwordComplexity')" class="text-danger">
+                Le mot de passe doit au moin contenir 8 caractères dont une lettre en capitale, une en minuscule, un chiffre, et un caractère spécial.
+              </div>
+              
+              <!-- Repeat Password Input Group -->
+              <c-input-group class="mb-4">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input name="repeatPassword" cFormControl placeholder="Confirmer le mot de passe" type="password" required />
+              </c-input-group>
+              <div *ngIf="registrationForm.hasError('passwordMismatch')" class="text-danger">
+                Mot de passe ne correspond pas.
+              </div>
+
+              <!-- User Type Dropdown -->
+              <div class="mb-3">
+              <c-input-group class="mb-4">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+              <c-dropdown variant="btn-group">
+                <button cButton cDropdownToggle color="secondary">
+                  {{ user.userType || 'Select User Type' }}
+                </button>
+                <ul cDropdownMenu>
+                  <li *ngFor="let userType of userTypes">
+                    <button (click)="selectUserType(userType)" cDropdownItem>
+                      {{ userType }}
+                    </button>
+                  </li>
+                </ul>
+              </c-dropdown> 
+              </c-input-group>
+              </div>
+
+<!-- NIF Input (Shown when UserType is Societe) -->
+<div class="mb-3" *ngIf="user.userType === 'SOCIETE'">
+  <c-input-group>
+    <span cInputGroupText>
+      <svg cIcon name="cilUser"></svg>
+    </span>
+    <input [(ngModel)]="user.nif" name="nif" cFormControl placeholder="NIF" />
+  </c-input-group>
+</div>
+
+<!-- Cin Input (Shown when UserType is Societe) -->
+<div class="mb-3" *ngIf="user.userType === 'SOCIETE'">
+  <c-input-group>
+    <span cInputGroupText>
+      <svg cIcon name="cilUser"></svg>
+    </span>
+    <input [(ngModel)]="user.cin" name="cin" cFormControl placeholder="CIN" />
+  </c-input-group>
+</div>
+
+<!-- MatriculeAgent Input (Shown when UserType is AGENT) -->
+<div class="mb-3" *ngIf="user.userType === 'AGENT'">
+  <c-input-group>
+    <span cInputGroupText>
+      <svg cIcon name="cilUser"></svg>
+    </span>
+    <input [(ngModel)]="user.matriculeAgent" name="matriculeAgent" cFormControl placeholder="Matricule Agent" />
+  </c-input-group>
+</div>
+
+<!-- MatriculeOperateurBanque Input (Shown when UserType is BANQUE) -->
+<div class="mb-3" *ngIf="user.userType === 'OPERATEUR'">
+  <c-input-group>
+    <span cInputGroupText>
+      <svg cIcon name="cilUser"></svg>
+    </span>
+    <input [(ngModel)]="user.matriculeOperateurBanque" name="matriculeOperateurBanque" cFormControl placeholder="Matricule Opérateur Banque" />
+  </c-input-group>
+</div>
+
+              <!-- Create Account Button -->
+              <div class="d-grid">
+                <button cButton color="success" type="submit">S'incrire</button>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
